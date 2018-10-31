@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+  <div id="errors" style="
+    background: #c00;
+    color: #fff;
+    display: none;
+    margin: -20px -20px 20px;
+    padding: 20px;
+    white-space: pre-wrap;
+  "></div>
+  <div id="root"></div>
+  <script>
+  window.addEventListener('mousedown', function(e) {
+    document.body.classList.add('mouse-navigation');
+    document.body.classList.remove('kbd-navigation');
+  });
+  window.addEventListener('keydown', function(e) {
+    if (e.keyCode === 9) {
+      document.body.classList.add('kbd-navigation');
+      document.body.classList.remove('mouse-navigation');
+    }
+  });
+  window.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
+      e.preventDefault();
+    }
+  });
+  window.onerror = function(message, source, line, col, error) {
+    var text = error ? error.stack || error : message + ' (at ' + source + ':' + line + ':' + col + ')';
+    errors.textContent += text + '\n';
+    errors.style.display = '';
+  };
+  console.error = (function(old) {
+    return function error() {
+      errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';
+      errors.style.display = '';
+      old.apply(this, arguments);
+    }
+  })(console.error);
+
+
+    var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+    url += '?' + $.param({
+      'api-key': "6ba1190f0cd84209b031da93e7a7cb6e",
+      'q': "design"
+    });
+    $.ajax({
+      url: url,
+      method: 'GET',
+    }).done(function(result) {
+      console.log(result);
+      // document.getElementById("headline").innerHTML = result.response.docs[0].headline.main;
+      var articles = result.response.docs;
+      
+      for (var i = articles.length - 1; i >= 0; i--) {
+        var title = document.createElement("h2");
+        var snippet = document.createElement("p");
+        var link = document.createElement("a");
+        // link.setAttribute('class', 'signature');
+        // link.setAttribute('href', '');
+
+        title.innerHTML = articles[i].headline.main;        
+        snippet.innerHTML = articles[i].snippet;
+        link.href = articles[i].web_url;
+        link.innerHTML = link.href;
+
+        my_div = document.getElementById("content");
+        my_div.append(title);
+        my_div.append(snippet);
+        my_div.append(link);
+      }
+    }).fail(function(err) {
+      throw err;
+  });
+  </script>
+  <div id="content">
+    <!-- <h1 id="headline"></h1> -->
+  </div>
+  </body>
+</html>
