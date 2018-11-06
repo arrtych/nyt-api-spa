@@ -33,33 +33,7 @@
   "></div>
   <div id="root"></div>
   <script>
-  window.addEventListener('mousedown', function(e) {
-    document.body.classList.add('mouse-navigation');
-    document.body.classList.remove('kbd-navigation');
-  });
-  window.addEventListener('keydown', function(e) {
-    if (e.keyCode === 9) {
-      document.body.classList.add('kbd-navigation');
-      document.body.classList.remove('mouse-navigation');
-    }
-  });
-  window.addEventListener('click', function(e) {
-    if (e.target.tagName === 'A' && e.target.getAttribute('href') === '#') {
-      e.preventDefault();
-    }
-  });
-  window.onerror = function(message, source, line, col, error) {
-    var text = error ? error.stack || error : message + ' (at ' + source + ':' + line + ':' + col + ')';
-    errors.textContent += text + '\n';
-    errors.style.display = '';
-  };
-  console.error = (function(old) {
-    return function error() {
-      errors.textContent += Array.prototype.slice.call(arguments).join(' ') + '\n';
-      errors.style.display = '';
-      old.apply(this, arguments);
-    }
-  })(console.error);
+
 
 
     var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -71,16 +45,17 @@
       url: url,
       method: 'GET',
     }).done(function(result) {
+      console.log("url:"+ url);
       console.log(result);
       // document.getElementById("headline").innerHTML = result.response.docs[0].headline.main;
       var articles = result.response.docs;
+      // var images = articles.multimedia[0];
       
       for (var i = articles.length - 1; i >= 0; i--) {
         var title = document.createElement("h2");
         var snippet = document.createElement("p");
         var link = document.createElement("a");
-        // link.setAttribute('class', 'signature');
-        // link.setAttribute('href', '');
+        var imgs = document.createElement("img");
 
         title.innerHTML = articles[i].headline.main;        
         snippet.innerHTML = articles[i].snippet;
@@ -88,6 +63,7 @@
         link.innerHTML = link.href;
 
         my_div = document.getElementById("content");
+        my_div.className += 'article-'+i;
         my_div.append(title);
         my_div.append(snippet);
         my_div.append(link);
@@ -95,6 +71,7 @@
     }).fail(function(err) {
       throw err;
   });
+
   </script>
   <div id="content">
     <!-- <h1 id="headline"></h1> -->

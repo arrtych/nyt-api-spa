@@ -48,3 +48,15 @@ ol, ul {
 .game-info {
   margin-left: 20px;
 }
+
+
+.show{
+    display: none;
+    width: 100%;
+}
+
+a:hover + .show,.show:hover{
+    display: block;
+    position: relative;
+    z-index: 100;
+}
