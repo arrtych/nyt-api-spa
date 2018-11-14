@@ -34,6 +34,21 @@
   <div id="root"></div>
   <script>
 
+      var url1 = "https://api.nytimes.com/svc/topstories/v2/home.json";
+      url1 += '?' + $.param({
+          'api-key': "6ba1190f0cd84209b031da93e7a7cb6e"
+      });
+      $.ajax({
+          url: url1,
+          method: 'GET',
+      }).done(function(result) {
+          console.log("url top stories: " + url1);
+          console.log(result)
+      }).fail(function(err) {
+          throw err;
+      });
+
+
 
 
     var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -45,7 +60,7 @@
       url: url,
       method: 'GET',
     }).done(function(result) {
-      console.log("url:"+ url);
+      console.log("url search: "+ url);
       console.log(result);
       // document.getElementById("headline").innerHTML = result.response.docs[0].headline.main;
       var articles = result.response.docs;
