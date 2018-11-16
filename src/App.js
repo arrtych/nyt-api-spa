@@ -3,9 +3,7 @@ import axios from 'axios';
 import Form from "./components/Form";
 import Article from "./components/Article";
 
-const API_KEY = "3585775f387b0d0cba6c5b3dc41b8167";
-const QUERY = "design";
-
+const API_KEY = "6ba1190f0cd84209b031da93e7a7cb6e";
 
 class App extends React.Component {
     state = {
@@ -20,9 +18,9 @@ class App extends React.Component {
 
         const query = this.state.query;
         // const api_call = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=3585775f387b0d0cba6c5b3dc41b8167&q=design`);
-        // const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${query}`;
+        const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${query}`;
         // const url = `https://jsonplaceholder.typicode.com/users`;
-        const url = `https://api.nytimes.com/svc/topstories/v2/home.json?api-key=6ba1190f0cd84209b031da93e7a7cb6e`;
+        // const url = `https://api.nytimes.com/svc/topstories/v2/home.json?api-key=6ba1190f0cd84209b031da93e7a7cb6e`;
 
         axios.get(url, {
             headers: { 'Access-Control-Allow-Origin': '*' }
