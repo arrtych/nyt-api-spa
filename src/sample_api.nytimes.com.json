@@ -1,0 +1,82 @@
+{
+  "section":"U.S.",
+  "subsection":"Politics",
+  "title":"Demanding Wall Funding, Trump Balks at Bill to Avert Shutdown",
+  "abstract":"After the Senate passed a spending bill, conservative anger has President Trump openly mulling whether he would sign it.",
+  "url":"https://www.nytimes.com/2018/12/20/us/politics/trump-government-shutdown.html",
+  "byline":"By EMILY COCHRANE",
+  "item_type":"Article",
+  "updated_date":"2018-12-20T14:31:28-05:00",
+  "created_date":"2018-12-20T11:45:28-05:00",
+  "published_date":"2018-12-20T11:45:28-05:00",
+  "material_type_facet":"",
+  "kicker":"",
+  "des_facet":[
+    "United States Politics and Government",
+    "Federal Budget (US)",
+    "Shutdowns (Institutional)",
+    "Vetoes (US)"
+  ],
+  "org_facet":[
+
+  ],
+  "per_facet":[
+    "Trump, Donald J"
+  ],
+  "geo_facet":[
+
+  ],
+  "multimedia":[
+    {
+      "url":"https://static01.nyt.com/images/2018/12/21/us/politics/21dc-cong1/merlin_148294899_2ad25c3f-9bb0-465e-af56-3669521088a6-thumbStandard.jpg",
+      "format":"Standard Thumbnail",
+      "height":75,
+      "width":75,
+      "type":"image",
+      "subtype":"photo",
+      "caption":"A deal to avert a government shutdown teetered on Thursday amid growing anger from President Trump.",
+      "copyright":"Samuel Corum for The New York Times"
+    },
+    {
+      "url":"https://static01.nyt.com/images/2018/12/21/us/politics/21dc-cong1/merlin_148294899_2ad25c3f-9bb0-465e-af56-3669521088a6-thumbLarge.jpg",
+      "format":"thumbLarge",
+      "height":150,
+      "width":150,
+      "type":"image",
+      "subtype":"photo",
+      "caption":"A deal to avert a government shutdown teetered on Thursday amid growing anger from President Trump.",
+      "copyright":"Samuel Corum for The New York Times"
+    },
+    {
+      "url":"https://static01.nyt.com/images/2018/12/21/us/politics/21dc-cong1/merlin_148294899_2ad25c3f-9bb0-465e-af56-3669521088a6-articleInline.jpg",
+      "format":"Normal",
+      "height":127,
+      "width":190,
+      "type":"image",
+      "subtype":"photo",
+      "caption":"A deal to avert a government shutdown teetered on Thursday amid growing anger from President Trump.",
+      "copyright":"Samuel Corum for The New York Times"
+    },
+    {
+      "url":"https://static01.nyt.com/images/2018/12/21/us/politics/21dc-cong1/merlin_148294899_2ad25c3f-9bb0-465e-af56-3669521088a6-mediumThreeByTwo210.jpg",
+      "format":"mediumThreeByTwo210",
+      "height":140,
+      "width":210,
+      "type":"image",
+      "subtype":"photo",
+      "caption":"A deal to avert a government shutdown teetered on Thursday amid growing anger from President Trump.",
+      "copyright":"Samuel Corum for The New York Times"
+    },
+    {
+      "url":"https://static01.nyt.com/images/2018/12/21/us/politics/21dc-cong1/merlin_148294899_2ad25c3f-9bb0-465e-af56-3669521088a6-superJumbo.jpg",
+      "format":"superJumbo",
+      "height":1365,
+      "width":2048,
+      "type":"image",
+      "subtype":"photo",
+      "caption":"A deal to avert a government shutdown teetered on Thursday amid growing anger from President Trump.",
+      "copyright":"Samuel Corum for The New York Times"
+    }
+  ],
+  "short_url":"https://nyti.ms/2GuRNlW"
+}

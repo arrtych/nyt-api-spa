@@ -33,7 +33,7 @@
   "></div>
   <div id="root"></div>
   <script>
-
+/*
       var url1 = "https://api.nytimes.com/svc/topstories/v2/home.json";
       url1 += '?' + $.param({
           'api-key': "6ba1190f0cd84209b031da93e7a7cb6e"
@@ -48,9 +48,9 @@
           throw err;
       });
 
+      */
 
-
-
+    /*
     var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
     url += '?' + $.param({
       'api-key': "6ba1190f0cd84209b031da93e7a7cb6e",
@@ -77,7 +77,7 @@
         link.href = articles[i].web_url;
         link.innerHTML = link.href;
 
-        my_div = document.getElementById("content");
+        var my_div = document.getElementById("content");
         my_div.className += 'article-'+i;
         my_div.append(title);
         my_div.append(snippet);
@@ -86,7 +86,7 @@
     }).fail(function(err) {
       throw err;
   });
-
+    */
   </script>
   <div id="content">
     <!-- <h1 id="headline"></h1> -->

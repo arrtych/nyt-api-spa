@@ -60,3 +60,16 @@ a:hover + .show,.show:hover{
     position: relative;
     z-index: 100;
 }
+
+.article {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.article {
+  display: flex;
+  flex-direction: column;
+}
+.article img{
+  width: 100%;
+}
