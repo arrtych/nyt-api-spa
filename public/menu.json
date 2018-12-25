@@ -1,7 +1,17 @@
 {
   "items": [
     {
-      "label": "santa newsapi",
+      "label": "All articles search",
+      "query": {
+        "url": "https://newsapi.org/v2/everything",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "q": "all"
+        }
+      }
+    },
+    {
+      "label": "the-next-web",
       "query": {
         "url": "https://newsapi.org/v2/top-headlines",
         "params": {
@@ -11,13 +21,28 @@
       }
     },
     {
-      "label": "santa nytimes",
+      "label": "Top stories nytimes",
       "query": {
         "url": "https://api.nytimes.com/svc/topstories/v2/home.json",
         "params": {
-          "api-key": "6ba1190f0cd84209b031da93e7a7cb6e"
+          "api-key": "6ba1190f0cd84209b031da93e7a7cb6e",
+          "q": "santa",
+          "query": "santa"
+        }
+      }
+    },
+    {
+      "label": "the-washington-times",
+      "query": {
+        "url": "https://newsapi.org/v2/top-headlines",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "the-washington-times"
         }
       }
     }
+
   ]
 }
+
+

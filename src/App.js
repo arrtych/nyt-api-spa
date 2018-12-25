@@ -1,11 +1,10 @@
 import React from "react";
-import axios from 'axios';
 import Form from "./components/Form";
 import Menu from "./components/Menu";
 import { buildUrl } from "./utils";
 import ArticlesList from "./components/ArticlesList";
 
-const DEFAULT_FORM_SEARCH_MENU_INDEX = 0;
+const DEFAULT_FORM_SEARCH_MENU_INDEX = 3;
 const API_KEY = "6ba1190f0cd84209b031da93e7a7cb6e";
 //newsapi key
 const api_key = "6a69c275de374ca7a1aa07bb4ce6c2f2"
@@ -46,12 +45,10 @@ class App extends React.Component {
         // const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${query}`;
         // const url = `https://jsonplaceholder.typicode.com/users`;
         // const url = `https://api.nytimes.com/svc/topstories/v2/home.json?api-key=6ba1190f0cd84209b031da93e7a7cb6e`;
-
-
         // https://newsapi.org/v2/top-headlines?sources=the-washington-times&apiKey=6a69c275de374ca7a1aa07bb4ce6c2f2
         const res = await fetch (query);
         const json = await res.json();
-        console.log(json);
+        console.log("json",json);
         this.setState({
             articles: this.prepareArticles(json)
         });
@@ -72,7 +69,7 @@ class App extends React.Component {
     prepareFormQuery(query) {
         let { menuItems } = this.state;
         let newQuery = menuItems && menuItems[DEFAULT_FORM_SEARCH_MENU_INDEX].query;
-        newQuery.params.q = query;
+        if(query) newQuery.params.q = query;
         return newQuery;
     }
 

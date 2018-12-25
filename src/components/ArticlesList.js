@@ -10,9 +10,7 @@ class ArticlesList extends React.Component {
         const { articles } = this.props;
         return (
             <div className="articles-list">
-                <p>-----Article start-----</p>
                 {articles && (<ul>{articles.map((article, index) => <Article key={`article-${index}`} article={article}/>)}</ul>)}
-                <p>-----Article ends-----</p>
             </div>
         )
 

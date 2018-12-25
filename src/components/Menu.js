@@ -24,6 +24,7 @@ class Menu extends React.Component {
             <div className="menu">
                 <ul>
                     {items && items.map((item)=> {
+                        console.log("item",item);
                         return <MenuItem item={item} onClick={this.onClick}/>
                     })}
                 </ul>
