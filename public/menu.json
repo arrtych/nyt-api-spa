@@ -6,7 +6,7 @@
         "url": "https://newsapi.org/v2/everything",
         "params": {
           "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
-          "q": "all"
+          "q": "everything"
         }
       }
     },
@@ -40,9 +40,18 @@
           "sources": "the-washington-times"
         }
       }
+    },
+    {
+      "label": "google-news",
+      "query": {
+        "url": "https://newsapi.org/v2/top-headlines",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "google-news"
+        }
+      }
     }
 
   ]
 }
-
 
