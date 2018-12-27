@@ -1,16 +1,40 @@
 import React from "react";
-import {Button,Navbar, FormControl, FormGroup} from "react-bootstrap";
+import {Button, Navbar, FormControl, FormGroup} from "react-bootstrap";
+import PropTypes from "prop-types";
 
-const Form = props => {
-    return (
+class Form extends React.Component {
+    static propTypes = {
+        onQueryChanged: PropTypes.func.isRequired,
+        query: PropTypes.func.isRequired,
+        onSubmit: PropTypes.func.isRequired,
+    };
+    constructor(props) {
+        super(props);
+        // this.state = {
+        //     query: ''
+        // }
+    }
+    onSubmit = (e) => {
+        const { props, state } = this;
+        e.preventDefault();
+        if(props.onSubmit) {
+            props.onSubmit(props.query);
+        }
+    };
+    render() {
+        const { onQueryChanged, query } = this.props;
+        return (
 
-        <Navbar.Form pullLeft {...props}>
-            <FormGroup>
-                <FormControl type="text" name="query" placeholder="Search..." value={props.query} onChange={props.onQueryChanged}/>
-            </FormGroup>{' '}
-            <Button type="submit" value="Get Article">Submit</Button>
-        </Navbar.Form>
-    );
-};
+            <Navbar.Form pullLeft>
+                <form onSubmit={this.onSubmit}>
+                    <FormGroup>
+                        <FormControl type="text" name="query" placeholder="Filter articles..." value={query} onChange={onQueryChanged}/>
+                    </FormGroup>
+                    {/*<Button type="submit">Filter</Button>*/}
+                </form>
+            </Navbar.Form>
+        );
+    }
+}
 
 export default Form;

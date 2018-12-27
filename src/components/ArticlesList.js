@@ -25,38 +25,8 @@ class ArticlesList extends React.Component {
     render() {
         let arr = [];
         const { articles } = this.props;
-        arr = [
-            {
-                color: "red",
-                value: "#f00"
-            },
-            {
-                color: "green",
-                value: "#0f0"
-            },
-            {
-                color: "blue",
-                value: "#00f"
-            },
-            {
-                color: "cyan",
-                value: "#0ff"
-            },
-            {
-                color: "magenta",
-                value: "#f0f"
-            },
-            {
-                color: "yellow",
-                value: "#ff0"
-            },
-            {
-                color: "black",
-                value: "#000"
-            }
-        ];
-        // console.log("arrr",arr);
-        console.log("f ar",articles);
+
+        console.log("article list",articles);
         // let filteredArticles = articles.filter(
         //     (article) => {
         //         return article.title.toLowerCase().indexOf(this.state.search) !=-1;
@@ -71,6 +41,7 @@ class ArticlesList extends React.Component {
                     {/*<input type="text" value={this.state.search} onChange={this.updateSearch.bind(this)}/>*/}
                 {/*</div>*/}
                 <Row className="articles-list">
+
 
                     {articles && (<ul>{articles.map((article, index) =>
                         <Article key={`article-${index}`} article={article}/>)}</ul>)}

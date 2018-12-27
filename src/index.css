@@ -74,6 +74,9 @@ a:hover + .show,.show:hover{
 .article img{
   width: 60%;
 }
+.article li {
+  padding-bottom: 15px;
+}
 .row{
   overflow: hidden;
 }

@@ -27,7 +27,7 @@ class Article extends  React.Component {
                         {images && (<ul>{images.map((image, index) => <li key={`image-${index}`}><img src={image} /></li>)}</ul>)}
                         <p className="description">{description}</p>
                     </div>
-                    <Button className="read-more-btn" bsStyle="primary" bsSize="large">
+                    <Button className="read-more-btn btn-block" bsStyle="primary" bsSize="large">
                         <a href={url}>Read more</a>
                     </Button>
 

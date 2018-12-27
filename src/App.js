@@ -26,14 +26,19 @@ class App extends React.Component {
         title: undefined,
         query: '',
         articles : undefined,
+        filteredArticles: undefined,
         sources : undefined,
         search: '',
         data: null
     };
 
 
-    onMenuClick = (href) => {
-        this.getData(href);
+    onMenuClick = async (href) => {
+        const articles = await this.getData(href);
+        this.setState({
+            articles,
+            filteredArticles: articles
+        });
     };
 
     prepareArticles(json) {
@@ -65,17 +70,14 @@ class App extends React.Component {
         // https://newsapi.org/v2/top-headlines?sources=the-washington-times&apiKey=6a69c275de374ca7a1aa07bb4ce6c2f2
         const res = await fetch (query);
         const json = await res.json();
-        console.log("json",json);
-        this.setState({
-            articles: this.prepareArticles(json)
-        });
-
-        const t = await fetch(`http://newsapi.org/v1/sources`);
-        const js = await t.json();
-        console.log("test newsapi", js);
-        this.setState({
-            sources: js
-        });
+        return this.prepareArticles(json);
+        //
+        // const t = await fetch(`http://newsapi.org/v1/sources`);
+        // const js = await t.json();
+        // console.log("test newsapi", js);
+        // this.setState({
+        //     sources: js
+        // });
         // document.getElementById("sourceSelector").innerHTML= js.sources.map(src => <option value="${src.id}">${src.name}</option>);
 
     }
@@ -91,7 +93,18 @@ class App extends React.Component {
     }
 
     onQueryChanged = (e) => {
-        this.setState({ query: e.target.value })
+        const query = e.target.value;
+        this.setState({ query });
+        if(query === "") {
+            this.setState((state) => ({
+                filteredArticles: state.articles
+            }));
+        } else {
+            // const articles = await this.getData(buildUrl(this.prepareFormQuery(query)));
+            this.setState((state) => ({
+                filteredArticles: state.articles.filter(this.filterArticles)
+            }));
+        }
     };
 
 
@@ -102,16 +115,30 @@ class App extends React.Component {
         return newQuery;
     }
 
-    onSubmit = (e) => {
-        if(e) e.preventDefault();
+    filterArticles = (article, index, array) => {
         const { query } = this.state;
-        this.getData(buildUrl(this.prepareFormQuery(query)));
+        if(!article) return false;
+
+        const keys = ["author","title","description","url","urlToImage","publishedAt","content"];
+        for (const key of keys) {
+            if(!article[key]) continue;
+            if(article[key].indexOf(query) !== -1) {
+                return true;
+            }
+        }
     };
 
-    loadArticles() {
-        this.getData(buildUrl(this.prepareFormQuery(null)));
+    onSubmit = async (e) => {
+        if(e) e.preventDefault();
 
+    };
 
+    async loadArticles() {
+        const articles = await this.getData(buildUrl(this.prepareFormQuery(null)));
+        this.setState({
+            articles,
+            filteredArticles: articles
+        });
     }
     loadData() {
         load(this.props.data).then(users => {
@@ -125,16 +152,12 @@ class App extends React.Component {
 
     componentDidMount() {
         this.fetchMenu().then(() => this.loadArticles());
-        // this.loadData();
-        // console.log("data",this.state.sources);
-        // {this.state.sources.map((article) => <option key={article.id} value={article.name}>{article.name}</option>)}
     }
 
 
 
     render() {
-        const { articles, menuItems,  } = this.state;
-        console.log("articles", articles);
+        const { filteredArticles, menuItems,  } = this.state;
         return (
             <div>
                 <Menu items={menuItems} onClick={this.onMenuClick} />
@@ -144,7 +167,7 @@ class App extends React.Component {
                     onQueryChanged={this.onQueryChanged}
                 />
 
-                <ArticlesList articles={articles} />
+                <ArticlesList articles={filteredArticles} />
             </div>
         );
     }
