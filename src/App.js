@@ -139,6 +139,10 @@ class App extends React.Component {
             articles,
             filteredArticles: articles
         });
+        // this.isotope = new Isotope( '.articles-list', { // eslint-disable-line
+        //     itemSelector: '.article',
+        //     layoutMode: 'fitRows'
+        // });
     }
     loadData() {
         load(this.props.data).then(users => {
@@ -149,9 +153,9 @@ class App extends React.Component {
     }
 
 
-
     componentDidMount() {
         this.fetchMenu().then(() => this.loadArticles());
+        console.log("this.isotope", this.isotope);
     }
 
 

@@ -40,10 +40,8 @@ class ArticlesList extends React.Component {
                 {/*<div className="search-input">*/}
                     {/*<input type="text" value={this.state.search} onChange={this.updateSearch.bind(this)}/>*/}
                 {/*</div>*/}
-                <Row className="articles-list">
-
-
-                    {articles && (<ul>{articles.map((article, index) =>
+                <Row>
+                    {articles && (<ul className="articles-list">{articles.map((article, index) =>
                         <Article key={`article-${index}`} article={article}/>)}</ul>)}
                 </Row>
 
