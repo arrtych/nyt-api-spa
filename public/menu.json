@@ -11,6 +11,16 @@
       }
     },
     {
+      "label": "cnn",
+      "query": {
+        "url": "https://newsapi.org/v2/top-headlines",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "cnn"
+        }
+      }
+    },
+    {
       "label": "the-next-web",
       "query": {
         "url": "https://newsapi.org/v2/top-headlines",
@@ -49,7 +59,38 @@
           "sources": "national-geographic"
         }
       }
+    },
+    {
+      "label": "the-verge",
+      "query": {
+        "url": "https://newsapi.org/v2/top-headlines",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "the-verge"
+        }
+      }
+    },
+    {
+      "label": "hacker-news",
+      "query": {
+        "url": "https://newsapi.org/v2/top-headlines",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "hacker-news"
+        }
+      }
+    },
+    {
+      "label": "google-news-ru",
+      "query": {
+        "url": "https://newsapi.org/v2/top-headlines",
+        "params": {
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "google-news-ru"
+        }
+      }
     }
+
 
   ]
 }

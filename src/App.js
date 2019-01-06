@@ -60,7 +60,10 @@ class App extends React.Component {
                 image: article.urlToImage,
                 title: article.title,
                 description: article.description,
-                url: article.url
+                url: article.url,
+                publishedAt: article.publishedAt,
+                content: article.content
+
             }));
         } else if(json.results) {
             articles = json.results.map((article) => ({
@@ -251,7 +254,7 @@ class App extends React.Component {
                             onQueryChanged={this.onQueryChanged}
                         />
                     </Menu>
-                    <Pagination current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
+                    <Pagination  current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
                 </div>
                 {loading && (<div>Loading</div>)}
                 <ArticlesList articles={filteredArticles} />

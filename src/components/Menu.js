@@ -36,6 +36,7 @@ class Menu extends React.Component {
         const currentState = this.state.active;
         var articles = document.querySelectorAll("#articles-list > .article");
         var links = document.getElementsByTagName("a");
+        var pagLinks = document.querySelectorAll("#pagination > li > a");
 
         if (this.state.active === true){
             //Light theme
@@ -48,8 +49,13 @@ class Menu extends React.Component {
             for (var i =0; i< links.length;i++){
                 links[i].style.color="#777";
             }
-            document.getElementById("menu-st").style.backgroundColor = "#e7e7e7";
+            for (var i =0; i< pagLinks.length;i++){
+                pagLinks[i].style.color="#337ab7";
+            }
+            document.getElementById("menu-st").style.backgroundColor = "#f8f8f8";
             document.getElementById("menu-st").style.borderColor = "#faebd7";
+            document.getElementById("theme-btn").innerHTML = "Light";
+
         } else {
 
             //Dark theme
@@ -62,8 +68,13 @@ class Menu extends React.Component {
             for (var i =0; i< links.length;i++){
                 links[i].style.color="white";
             }
+            for (var i =0; i< pagLinks.length;i++){
+                pagLinks[i].style.color="#777";
+            }
             document.getElementById("menu-st").style.backgroundColor = "#375a7f";
             document.getElementById("menu-st").style.borderColor = "#375a7f";
+            document.getElementById("theme-btn").innerHTML = "Dark";
+
 
 
         }
@@ -90,7 +101,7 @@ class Menu extends React.Component {
                         <Navbar.Form pullRight>
                             {children}
                         </Navbar.Form>{' '}
-                        <Button className={this.state.active ? 'theme-btns light-th': "theme-btns dark-th"} onClick={this.toggleTheme}>Change theme</Button>
+                        <Button id="theme-btn" className={this.state.active ? 'theme-btns light-th': "theme-btns dark-th"} onClick={this.toggleTheme}>{this.state.active ? 'Light theme': "Dark theme"}</Button>
                     </Navbar.Collapse>
 
                 </Navbar>

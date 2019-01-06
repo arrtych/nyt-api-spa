@@ -47,7 +47,7 @@ class Pagination extends React.Component {
     render() {
         const { onQueryChanged, query } = this.props;
         return (
-            <BootstrapPagination>
+            <BootstrapPagination id="pagination">
                 <First />
                 <Prev />
                 {this.getPrintablePages()}
