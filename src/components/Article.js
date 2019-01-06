@@ -15,21 +15,23 @@ class Article extends  React.Component {
             images,
             description,
             title,
-            url
+            url,
         } = article;
         return (
-            <li className="article">
-                <h2>{title}</h2>
-                <p><b>Author:</b> {author}</p>
-                <div>
-                    {image && <img src={image} />}
-                    {images && (<ul>{images.map((image, index) => <li key={`image-${index}`}><img src={image} /></li>)}</ul>)}
-                    <p className="description">{description}</p>
-                </div>
-                <Button className="read-more-btn" bsStyle="primary" bsSize="large">
-                    <a href={url}>Read more</a>
-                </Button>
+            <li className="article ">
+                {/*<Col xs={6} md={6}>*/}
 
+                    <h2>{title}</h2>
+                    <p><b>Author:</b> {author}</p>
+                    <div>
+                        {image && <img src={image} />}
+                        {images && (<ul>{images.map((image, index) => <li key={`image-${index}`}><img src={image} /></li>)}</ul>)}
+                        <p className="description">{description}</p>
+                    </div>
+                    <Button className="read-more-btn pull-right" bsStyle="warning" bsSize="small">
+                        <a href={url}>Read more ...</a>
+                    </Button>
+                {/*</Col>*/}
             </li>
         )
     }

@@ -21,13 +21,12 @@
       }
     },
     {
-      "label": "Top stories nytimes",
+      "label": "google-news",
       "query": {
-        "url": "https://api.nytimes.com/svc/topstories/v2/home.json",
+        "url": "https://newsapi.org/v2/top-headlines",
         "params": {
-          "api-key": "6ba1190f0cd84209b031da93e7a7cb6e",
-          "q": "santa",
-          "query": "santa"
+          "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
+          "sources": "google-news"
         }
       }
     },
@@ -42,12 +41,12 @@
       }
     },
     {
-      "label": "google-news",
+      "label": "national-geographic",
       "query": {
         "url": "https://newsapi.org/v2/top-headlines",
         "params": {
           "apiKey": "6a69c275de374ca7a1aa07bb4ce6c2f2",
-          "sources": "google-news"
+          "sources": "national-geographic"
         }
       }
     }

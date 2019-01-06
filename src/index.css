@@ -1,6 +1,7 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  background-color: #faebd7;
 }
 
 ol, ul {
@@ -63,38 +64,38 @@ a:hover + .show,.show:hover{
 
 .article {
   list-style-type: none;
-  /*padding: 1em;*/
+  padding: 1em;
   /*margin: 1px;*/
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 }
 .articles-list {
-  display: flex;
+  /*display: flex;*/
   /* flex-grow: 1; */
   /*grid-template-columns: 1fr 1fr 1fr;*/
 }
 .article {
-  display: flex;
-  width: 300px;
-  height: 500px;
+  /*display: flex;*/
+  /*width: 300px;*/
+  /*height: 500px;*/
   /*height: 500px;*/
   float: left;
   flex-direction: column;
 }
-.article p{
-  z-index: 2;
-  position: relative;
-}
+/*.article p{*/
+  /*z-index: 2;*/
+  /*position: relative;*/
+/*}*/
 .article img{
-  width: 100%;
-  position: absolute;
-  bottom: 2px;
-  left: 2px;
+  width: 60%;
+  /*position: absolute;*/
+  /*bottom: 2px;*/
+  /*left: 2px;*/
 }
 .read-more-btn {
 
 }
 .article li {
-  padding-bottom: 15px;
+  /*padding-bottom: 15px;*/
 }
 .row {
   overflow: hidden;
@@ -105,10 +106,32 @@ a:hover + .show,.show:hover{
   /*padding-bottom: 99999px;*/
 /*}*/
 
+.navbar .container {
+  width: 100%!important;
+}
+
 .read-more-btn a {
   text-decoration: none;
   color: white;
 }
 .description{
   padding: 1em;
+}
+.menu-style {
+  /*background-color: #cc0000;*/
+}
+.articles-list >  .article {
+  background-color: #f8f8f8;
+  /*background-color: #f7efaba6;*/
+  border: 1px solid #d1bf1ca3;
+  border-radius: 0.75em;
+  margin: 0.5em;
+}
+
+.theme-btns {
+  margin-top: 0.5em;
+  margin-bottom: 0.3em;
+}
+.light-th{
+  /*background-color: #cc0000;*/
 }

@@ -24,15 +24,12 @@ class Form extends React.Component {
     render() {
         const { onQueryChanged, query } = this.props;
         return (
-
-            <Navbar.Form pullLeft>
-                <form onSubmit={this.onSubmit}>
-                    <FormGroup>
-                        <FormControl type="text" name="query" placeholder="Filter articles..." value={query} onChange={onQueryChanged}/>
-                    </FormGroup>
-                    {/*<Button type="submit">Filter</Button>*/}
-                </form>
-            </Navbar.Form>
+            <form onSubmit={this.onSubmit}>
+                <FormGroup>
+                    <FormControl type="text" name="query" placeholder="Filter articles..." value={query} onChange={onQueryChanged}/>
+                </FormGroup>
+                {/*<Button type="submit">Filter</Button>*/}
+            </form>
         );
     }
 }
