@@ -1,0 +1,17 @@
+[
+  {
+    "id": "menu.lang",
+    "defaultMessage": "Lang",
+    "filepath": "src/components/Menu.js"
+  },
+  {
+    "id": "menu.theme.light",
+    "defaultMessage": "Light theme",
+    "filepath": "src/components/Menu.js"
+  },
+  {
+    "id": "menu.theme.dark",
+    "defaultMessage": "Dark theme",
+    "filepath": "src/components/Menu.js"
+  }
+]

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import MenuItem from './MenuItem';
 import {
     Button,
@@ -13,14 +14,31 @@ import {
 } from "react-bootstrap";
 import Form from "./Form";
 
+const messages = defineMessages({
+    lang: {
+        id: 'menu.lang',
+        defaultMessage: 'Lang'
+    },
+    themeLight: {
+        id: 'menu.theme.light',
+        defaultMessage: 'Light theme'
+    },
+    themeDark: {
+        id: 'menu.theme.dark',
+        defaultMessage: 'Dark theme'
+    },
+});
+
 class Menu extends React.Component {
     static propTypes = {
         items: PropTypes.array.isRequired,
         onClick: PropTypes.func.isRequired,
     };
     toggleTheme= this.toggleTheme.bind(this);
+    changeLang= this.changeLanguage.bind(this);
     state = {
-        active: false
+        active: false,
+        lang: undefined
     };
     componentDidMount() {
 
@@ -81,8 +99,12 @@ class Menu extends React.Component {
         this.setState({ active: !currentState });
         console.log("active",this.state.active);
     };
+
+    changeLanguage(){
+
+    };
     render() {
-        const { items, children } = this.props;
+        const { items, children, intl:{formatMessage} } = this.props;
         return (
             <div className="menu" >
                 <Navbar id="menu-st">
@@ -101,7 +123,15 @@ class Menu extends React.Component {
                         <Navbar.Form pullRight>
                             {children}
                         </Navbar.Form>{' '}
-                        <Button id="theme-btn" className={this.state.active ? 'theme-btns light-th': "theme-btns dark-th"} onClick={this.toggleTheme}>{this.state.active ? 'Light theme': "Dark theme"}</Button>
+                        <Button id="theme-btn" className={this.state.active ? 'theme-btns light-th': "theme-btns dark-th"} onClick={this.toggleTheme}>
+                            {this.state.active ? formatMessage(messages.themeLight): formatMessage(messages.themeDark)}</Button>
+                        <Button id="lang" onClick={this.changeLang}>
+                            {formatMessage(messages.lang)}
+                        </Button>
+                        <div className="languages">
+                            <a href="/?locale=ru">Русский</a>
+                            <a href="/?locale=en">English</a>
+                        </div>
                     </Navbar.Collapse>
 
                 </Navbar>
@@ -113,4 +143,4 @@ class Menu extends React.Component {
         )
     }
 }
-export default Menu;
+export default injectIntl(Menu);

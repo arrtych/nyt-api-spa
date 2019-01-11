@@ -6,6 +6,7 @@ import ArticlesList from "./components/ArticlesList";
 import Pagination from "./components/Pagination";
 import load from './load';
 import PropTypes from "prop-types";
+import {Button} from "react-bootstrap";
 
 
 const DEFAULT_FORM_SEARCH_MENU_INDEX = 3;
@@ -17,10 +18,10 @@ const root = document.getElementById("root");
 
 // // const sourceSelector = document.querySelector("#sourceSelector");
 // const dropdown = document.getElementById('sourceSelector');
-
 class App extends React.Component {
     static propTypes = {
-        data: PropTypes.array.isRequired
+        data: PropTypes.array.isRequired,
+        onClick: PropTypes.func.isRequired,
 
     };
     state = {
@@ -36,7 +37,7 @@ class App extends React.Component {
         pagesNum: 1,
         loading: false,
         perPage: DEFAULT_PER_PAGE,
-        data: null
+        data: null,
     };
 
 
@@ -253,6 +254,7 @@ class App extends React.Component {
                             // query={this.state.query}
                             onQueryChanged={this.onQueryChanged}
                         />
+
                     </Menu>
                     <Pagination  current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
                 </div>
