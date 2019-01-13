@@ -1,5 +1,10 @@
 [
   {
+    "id": "button.read-more",
+    "defaultMessage": "Read more ...",
+    "filepath": "src/components/Article.js"
+  },
+  {
     "id": "menu.lang",
     "defaultMessage": "Lang",
     "filepath": "src/components/Menu.js"

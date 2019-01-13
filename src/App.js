@@ -6,7 +6,7 @@ import ArticlesList from "./components/ArticlesList";
 import Pagination from "./components/Pagination";
 import load from './load';
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
+import {Button, Grid, Row} from "react-bootstrap";
 import translations from "./i18n/locales"
 import {injectIntl, IntlProvider} from 'react-intl';
 import {changeLanguage} from "./actions/language";
@@ -105,38 +105,45 @@ class App extends React.Component {
     }
 
     async getData(query) {
+        try {
+            // copyright: "Copyright (c) 2018 The New York Times Company. All Rights Reserved."
+            // response: {docs: [{web_url: "https://www.nytimes.com/2018/12/26/opinion/letters/trump-santa.html",…},…],…}
+            // docs: [{web_url: "https://www.nytimes.com/2018/12/26/opinion/letters/trump-santa.html",…},…]
+            // 0: {web_url: "https://www.nytimes.com/2018/12/26/opinion/letters/trump-santa.html",…}
+            // 1: {web_url: "https://topics.nytimes.com/top/news/business/companies/santa-lucia-bancorp/index.html",…}
+            // 2: {,…}
+            // 3: {,…}
+            // 4: {web_url: "https://www.nytimes.com/2018/12/25/us/politics/trump-santa-claus-believer.html",…}
+            // 5: {,…}
+            // 6: {web_url: "https://topics.nytimes.com/topic/company/santa-fe-gold-corporation",…}
+            // 7: {,…}
+            // 8: {,…}
+            // 9: {web_url: "https://www.nytimes.com/2018/05/19/us/texas-school-shooting-victims.html",…}
+            // meta: {hits: 153159, offset: 10, time: 34}
+            // status: "OK"
 
-        // copyright: "Copyright (c) 2018 The New York Times Company. All Rights Reserved."
-        // response: {docs: [{web_url: "https://www.nytimes.com/2018/12/26/opinion/letters/trump-santa.html",…},…],…}
-        // docs: [{web_url: "https://www.nytimes.com/2018/12/26/opinion/letters/trump-santa.html",…},…]
-        // 0: {web_url: "https://www.nytimes.com/2018/12/26/opinion/letters/trump-santa.html",…}
-        // 1: {web_url: "https://topics.nytimes.com/top/news/business/companies/santa-lucia-bancorp/index.html",…}
-        // 2: {,…}
-        // 3: {,…}
-        // 4: {web_url: "https://www.nytimes.com/2018/12/25/us/politics/trump-santa-claus-believer.html",…}
-        // 5: {,…}
-        // 6: {web_url: "https://topics.nytimes.com/topic/company/santa-fe-gold-corporation",…}
-        // 7: {,…}
-        // 8: {,…}
-        // 9: {web_url: "https://www.nytimes.com/2018/05/19/us/texas-school-shooting-victims.html",…}
-        // meta: {hits: 153159, offset: 10, time: 34}
-        // status: "OK"
 
-
-        // const api_call = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=3585775f387b0d0cba6c5b3dc41b8167&q=design`);
-        // const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${query}`;
-        // const url = `https://jsonplaceholder.typicode.com/users`;
-        // const url = `https://api.nytimes.com/svc/topstories/v2/home.json?api-key=6ba1190f0cd84209b031da93e7a7cb6e`;
-        // https://newsapi.org/v2/top-headlines?sources=the-washington-times&apiKey=6a69c275de374ca7a1aa07bb4ce6c2f2
-        this.setState({
-            loading: true
-        });
-        const res = await fetch (query);
-        const json = await res.json();
-        this.setState({
-            loading: false
-        });
-        return this.prepareArticles(json);
+            // const api_call = await fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=3585775f387b0d0cba6c5b3dc41b8167&q=design`);
+            // const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${API_KEY}&q=${query}`;
+            // const url = `https://jsonplaceholder.typicode.com/users`;
+            // const url = `https://api.nytimes.com/svc/topstories/v2/home.json?api-key=6ba1190f0cd84209b031da93e7a7cb6e`;
+            // https://newsapi.org/v2/top-headlines?sources=the-washington-times&apiKey=6a69c275de374ca7a1aa07bb4ce6c2f2
+            this.setState({
+                loading: true
+            });
+            const res = await fetch(query);
+            const json = await res.json();
+            this.setState({
+                loading: false
+            });
+            return this.prepareArticles(json);
+        } catch (err) {
+            console.error(err);
+            this.setState({
+                loading: false
+            });
+            return [];
+        }
         //
         // const t = await fetch(`http://newsapi.org/v1/sources`);
         // const js = await t.json();
@@ -161,16 +168,24 @@ class App extends React.Component {
     }
 
     onQueryChanged = (e) => {
-        const query = e.target.value;
-        this.setState({ query });
+        const { articles } = this.state;
+        let query;
+        if(e && e.target && e.target.value) {
+            query = e.target.value;
+            this.setState({ query });
+        } else {
+            query = this.state.query;
+        }
         if(query === "") {
             this.setState((state) => ({
                 filteredArticles: state.articles
             }));
         } else {
+            const filteredArticles = articles.map(this.filterArticles).filter(Boolean);
             // const articles = await this.getData(buildUrl(this.prepareFormQuery(query)));
+            console.log("SEARCH filteredArticles", filteredArticles);
             this.setState((state) => ({
-                filteredArticles: state.articles.filter(this.filterArticles)
+                filteredArticles
             }));
         }
     };
@@ -184,22 +199,40 @@ class App extends React.Component {
         return newQuery;
     }
 
+
+    wordHighlight = (text, searchText) => {
+        var innerHTML = searchText;
+        var index = innerHTML.toLowerCase().indexOf(text);
+        if (index >= 0) {
+            innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+text.length) + "</span>" + innerHTML.substring(index + text.length);
+            searchText = innerHTML;
+        }
+        return searchText;
+    };
+
     filterArticles = (article, index, array) => {
+        let newArticle = {...article};
         const { query } = this.state;
         if(!article) return false;
-
-        const keys = ["author","title","description","url","urlToImage","publishedAt","content"];
+        const keys = ["author","title","description","content"];
+        let notFound = true;
         for (const key of keys) {
-            if(!article[key]) continue;
+            newArticle[key] = article[key];
+            if(!article[key]) {
+                continue;
+            }
             if(article[key].toLowerCase().indexOf(query.toLowerCase()) !== -1) {
-                return true;
+                newArticle[key] = this.wordHighlight(query.toLowerCase(), article[key]);
+                notFound = false;
             }
         }
+        if(notFound) return null;
+        return newArticle;
     };
 
     onSubmit = async (e) => {
         if(e) e.preventDefault();
-
+        this.onQueryChanged();
     };
 
     refetchArticles = async () => {
@@ -241,68 +274,32 @@ class App extends React.Component {
 
         });
     };
-
-    onThemeChange(theme) {
-        var articles = document.querySelectorAll("#articles-list > .article");
-        var links = document.getElementsByTagName("a");
-        var pagLinks = document.querySelectorAll("#pagination > li > a");
-
-        if (theme === "light"){
-            //Light theme
-            document.body.style.setProperty('background-color', '#faebd7');
-            document.body.style.setProperty('color', '#333');
-            for (var i =0; i< articles.length;i++){
-                articles[i].style.backgroundColor = "#f8f8f8";
-                articles[i].style.borderColor = "#d1bf1ca3";
-            }
-            for (var i =0; i< links.length;i++){
-                links[i].style.color="#777";
-            }
-            for (var i =0; i< pagLinks.length;i++){
-                pagLinks[i].style.color="#337ab7";
-            }
-            document.getElementById("menu-st").style.backgroundColor = "#f8f8f8";
-            document.getElementById("menu-st").style.borderColor = "#faebd7";
-            document.getElementById("theme-btn").innerHTML = "Light";
-
-        } else {
-
-            //Dark theme
-            document.body.style.setProperty('background-color', '#222');
-            document.body.style.setProperty('color', 'white');
-            for (var i =0; i< articles.length;i++){
-                articles[i].style.backgroundColor = "#303030";
-                articles[i].style.borderColor = "#303030";
-            }
-            for (var i =0; i< links.length;i++){
-                links[i].style.color="white";
-            }
-            for (var i =0; i< pagLinks.length;i++){
-                pagLinks[i].style.color="#777";
-            }
-            document.getElementById("menu-st").style.backgroundColor = "#375a7f";
-            document.getElementById("menu-st").style.borderColor = "#375a7f";
-            document.getElementById("theme-btn").innerHTML = "Dark";
-        }
-    }
-
+    setTheme = () => {
+        const { theme } = this.props;
+        if(theme) document.body.className = `${this.props.theme}-theme`;
+    };
     componentDidMount() {
         this.fetchMenu().then(() => this.loadArticles());
         // this.onThemeChange(theme);
+        this.setTheme();
     }
 
-
+    componentDidUpdate(prevProps) {
+        if (this.props.theme !== prevProps.theme) {
+            this.setTheme();
+        }
+    }
 
     render() {
         const { filteredArticles, menuItems, currentPage, pagesNum, loading } = this.state;
-        const { language } = this.props.language;
+        const { language } = this.props;
         const locale = language || "en";
         const messages = translations[locale];
         console.log("LANGUAGE", locale);
         return (
             <IntlProvider locale={locale} key={locale} messages={messages}>
                 <div>
-                    <div className="menu-style" id="menu-style">
+                    <Grid className="menu-style" id="menu-style">
                         <Menu items={menuItems} onClick={this.onMenuClick}>
                             <Form
                                 onSubmit={this.onSubmit}
@@ -311,9 +308,17 @@ class App extends React.Component {
                             />
 
                         </Menu>
-                        <Pagination  current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
-                    </div>
-                    {loading && (<div>Loading</div>)}
+                        <div className="sub-header">
+                            <Pagination current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
+                            {loading && (<div className="loading">
+                                <div className="lds-ellipsis">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div></div>)}
+                        </div>
+                    </Grid>
                     <ArticlesList articles={filteredArticles} />
                 </div>
             </IntlProvider>
@@ -321,8 +326,8 @@ class App extends React.Component {
     }
 }
 const mapStateToProps = state => ({
-    language: state.language,
-    ...state
+    language: state.language.language,
+    theme: state.theme.theme,
 });
 const mapDispatchToProps = dispatch => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(App);

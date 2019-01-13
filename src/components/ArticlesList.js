@@ -41,8 +41,8 @@ class ArticlesList extends React.Component {
                     {/*<input type="text" value={this.state.search} onChange={this.updateSearch.bind(this)}/>*/}
                 {/*</div>*/}
                 <Row>
-                    {articles && (<ul className="articles-list" id="articles-list" >{articles.map((article, index) =>
-                        <Article key={`article-${index}`}  article={article}/>)}</ul>)}
+                    {articles && (<div className="articles-list col" id="articles-list" >{articles.map((article, index) =>
+                        <Article key={`article-${index}`}  article={article}/>)}</div>)}
                 </Row>
 
             </Grid>

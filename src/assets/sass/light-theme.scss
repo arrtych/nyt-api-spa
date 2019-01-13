@@ -1,0 +1,18 @@
+body {
+  &.light-theme {
+    @import 'light-theme-variables';
+    @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+    .article {
+      background-color: #f8f8f8;
+      /*background-color: #f7efaba6;*/
+      border: 1px solid #d1bf1ca3;
+      border-radius: 0.75em;
+      margin: 0.5em;
+    }
+    .lds-ellipsis {
+      div {
+        background: $brand-info;
+      }
+    }
+  }
+}

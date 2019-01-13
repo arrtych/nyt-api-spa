@@ -1,13 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Button, Col} from "react-bootstrap";
+import {Button, Panel, Col} from "react-bootstrap";
+import {injectIntl, defineMessages} from "react-intl";
+
+const messages = defineMessages({
+    readMore: {
+        id: 'button.read-more',
+        defaultMessage: 'Read more ...'
+    },
+});
 
 class Article extends  React.Component {
     static propTypes = {
-        article: PropTypes.object.isRequired
+        article: PropTypes.object
     };
     render() {
-        let { article } = this.props;
+        let { article, intl:{formatMessage} } = this.props;
         if(!article) article = {};
         const {
             author,
@@ -28,24 +36,25 @@ class Article extends  React.Component {
         // var contentNew = content;
         // var modifiedContent = contentNew.substring(0,5);
         return (
-            <li className="article article-st-light">
-                {/*<Col xs={6} md={6}>*/}
-
-                    <h4>{title}</h4>
-                    <p><b>Author:</b> {author}</p>
+            <Panel className="article">
+                <Panel.Heading>
+                    <div dangerouslySetInnerHTML={{__html: title}}></div>
+                </Panel.Heading>
+                <Panel.Body>
+                    <p><b>Author:</b> <div dangerouslySetInnerHTML={{__html: author}}></div></p>
                     <p><b>Date:</b> {modifiedDate}</p>
                     <div>
                         {image && <img src={image} />}
                         {images && (<ul>{images.map((image, index) => <li key={`image-${index}`}><img src={image} /></li>)}</ul>)}
-                        <p className="description"><b>Description:</b> {description}</p>
+                        <p className="description"><b>Description:</b> <div dangerouslySetInnerHTML={{__html: description}}></div></p>
                     </div>
 
                     <Button className="read-more-btn pull-right" bsStyle="warning" bsSize="small">
-                        <a href={url}>Read more ...</a>
+                        <a href={url}>{formatMessage(messages.readMore)}</a>
                     </Button>
-                {/*</Col>*/}
-            </li>
+                </Panel.Body>
+            </Panel>
         )
     }
 }
-export default Article;
+export default injectIntl(Article);

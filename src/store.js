@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import persistState from 'redux-localstorage'
 import rootReducer from './reducers/rootReducer';
 
 const loadState = {
@@ -18,7 +19,10 @@ export default function configureStore(initialState = loadState) {
         rootReducer,
         loadState,
         composeEnhancers(
-            applyMiddleware(thunk)
+            applyMiddleware(thunk),
+            persistState("", {
+                key: 'newsspa-data'
+            }),
         ),
     );
 }
