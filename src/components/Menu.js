@@ -1,16 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from 'prop-types';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import MenuItem from './MenuItem';
+import { changeTheme } from './../actions/theme';
+import { changeLanguage } from './../actions/language';
 import {
     Button,
     ButtonToolbar,
     Nav,
     Navbar,
     NavDropdown,
-    NavItem,
-    ToggleButton,
-    ToggleButtonGroup
+    MenuItem as BMenuItem,
 } from "react-bootstrap";
 import Form from "./Form";
 
@@ -34,11 +35,16 @@ class Menu extends React.Component {
         items: PropTypes.array.isRequired,
         onClick: PropTypes.func.isRequired,
     };
-    toggleTheme= this.toggleTheme.bind(this);
-    changeLang= this.changeLanguage.bind(this);
     state = {
         active: false,
-        lang: undefined
+        lang: undefined,
+        languages: [{
+            value: "ru",
+            label: "Русский",
+        }, {
+            value: "en",
+            label: "English",
+        }]
     };
     componentDidMount() {
 
@@ -50,61 +56,50 @@ class Menu extends React.Component {
         }
         console.log("onclick");
     };
-    toggleTheme() {
-        const currentState = this.state.active;
+    toggleTheme = () => {
+        const { theme } = this.props;
+        let newTheme = "light";
+        const themeStyle = document.getElementById("theme-style");
         var articles = document.querySelectorAll("#articles-list > .article");
-        var links = document.getElementsByTagName("a");
-        var pagLinks = document.querySelectorAll("#pagination > li > a");
-
-        if (this.state.active === true){
-            //Light theme
-            document.body.style.setProperty('background-color', '#faebd7');
-            document.body.style.setProperty('color', '#333');
+        console.log("themeStyle", themeStyle);
+        if(theme === "dark") {
+            themeStyle.href = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css";
+            newTheme = "light";
             for (var i =0; i< articles.length;i++){
-                articles[i].style.backgroundColor = "#f8f8f8";
-                articles[i].style.borderColor = "#d1bf1ca3";
+                articles[i].classList.add("article-st-light");
+                articles[i].classList.remove("article-st-dark");
             }
-            for (var i =0; i< links.length;i++){
-                links[i].style.color="#777";
-            }
-            for (var i =0; i< pagLinks.length;i++){
-                pagLinks[i].style.color="#337ab7";
-            }
-            document.getElementById("menu-st").style.backgroundColor = "#f8f8f8";
-            document.getElementById("menu-st").style.borderColor = "#faebd7";
-            document.getElementById("theme-btn").innerHTML = "Light";
+            document.body.className = "body-light";
+            console.log("themeStyle", "light");
 
-        } else {
-
-            //Dark theme
-            document.body.style.setProperty('background-color', '#222');
-            document.body.style.setProperty('color', 'white');
+        } else if (theme === "light") {
+            themeStyle.href = "https://bootswatch.com/3/darkly/bootstrap.min.css";
+            newTheme = "dark";
             for (var i =0; i< articles.length;i++){
-                articles[i].style.backgroundColor = "#303030";
-                articles[i].style.borderColor = "#303030";
+                articles[i].classList.add("article-st-dark");
+                articles[i].classList.remove("article-st-light");
             }
-            for (var i =0; i< links.length;i++){
-                links[i].style.color="white";
-            }
-            for (var i =0; i< pagLinks.length;i++){
-                pagLinks[i].style.color="#777";
-            }
-            document.getElementById("menu-st").style.backgroundColor = "#375a7f";
-            document.getElementById("menu-st").style.borderColor = "#375a7f";
-            document.getElementById("theme-btn").innerHTML = "Dark";
-
-
+            document.body.className = document.body.className.replace("body-light","");
+            console.log("themeStyle", "dark");
+            // document.body.style.setProperty('background-color', '#222');
+            // document.body.style.setProperty('color', 'white');
+            // for (var i =0; i< articles.length;i++){
+            //     articles[i].style.backgroundColor = "#303030";
+            //     articles[i].style.borderColor = "#303030";
+            // }
 
         }
-        this.setState({ active: !currentState });
-        console.log("active",this.state.active);
+        this.props.changeTheme(newTheme);
     };
 
-    changeLanguage(){
-
+    changeLanguage = (language, e) => {
+        console.log("language, e", language, e);
+        e.preventDefault();
+        this.props.changeLanguage(language);
     };
     render() {
         const { items, children, intl:{formatMessage} } = this.props;
+        const { languages } = this.state;
         return (
             <div className="menu" >
                 <Navbar id="menu-st">
@@ -116,22 +111,35 @@ class Menu extends React.Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav pullLeft>
-                            {items && items.map((item)=> {
-                                return <MenuItem item={item} onClick={this.onClick}/>
-                            })}
+                            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
+                                {items && items.map((item)=> {
+                                    return <MenuItem item={item} onClick={this.onClick}/>
+                                })}
+                            </NavDropdown>
                         </Nav>
                         <Navbar.Form pullRight>
                             {children}
-                        </Navbar.Form>{' '}
-                        <Button id="theme-btn" className={this.state.active ? 'theme-btns light-th': "theme-btns dark-th"} onClick={this.toggleTheme}>
-                            {this.state.active ? formatMessage(messages.themeLight): formatMessage(messages.themeDark)}</Button>
-                        <Button id="lang" onClick={this.changeLang}>
-                            {formatMessage(messages.lang)}
+                        </Navbar.Form>
+                        <Nav pullRight>
+                            <NavDropdown
+                                className="languages"
+                                title={<span>
+                                    <img src={`/assets/img/flag-${this.props.language}.png`} />
+                                    <span>{formatMessage(messages.lang)}</span>
+                                </span>}
+                                id="basic-nav-dropdown"
+                            >
+                                {languages && languages.map((item)=> {
+                                    return <BMenuItem onClick={this.changeLanguage.bind(this, item.value)}>
+                                        <img src={`/assets/img/flag-${item.value}.png`} />
+                                        <span>{item.label}</span>
+                                    </BMenuItem>
+                                })}
+                            </NavDropdown>
+                        </Nav>
+                        <Button id="theme-btn" className={`theme-btns ${this.props.theme}-th`} onClick={this.toggleTheme}>
+                            {this.props.theme === "light" ? formatMessage(messages.themeLight): formatMessage(messages.themeDark)}
                         </Button>
-                        <div className="languages">
-                            <a href="/?locale=ru">Русский</a>
-                            <a href="/?locale=en">English</a>
-                        </div>
                     </Navbar.Collapse>
 
                 </Navbar>
@@ -143,4 +151,12 @@ class Menu extends React.Component {
         )
     }
 }
-export default injectIntl(Menu);
+const mapStateToProps = state => ({
+    theme: state.theme.theme,
+    language: state.language.language,
+});
+const mapDispatchToProps = dispatch => ({
+    changeTheme: (value) => dispatch(changeTheme(value)),
+    changeLanguage: (value) => dispatch(changeLanguage(value)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(Menu));

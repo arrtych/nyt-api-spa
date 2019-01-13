@@ -1,6 +1,9 @@
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
+  /*background-color: #faebd7;*/
+}
+.body-light{
   background-color: #faebd7;
 }
 
@@ -120,7 +123,17 @@ a:hover + .show,.show:hover{
 .menu-style {
   /*background-color: #cc0000;*/
 }
-.articles-list >  .article {
+/*.articles-list >  .article {*/
+.article-st-dark{
+  background-color: #303030;
+  /*background-color: #f7efaba6;*/
+  border: 1px solid #303030;
+  border-radius: 0.75em;
+  margin: 0.5em;
+
+}
+
+.article-st-light{
   background-color: #f8f8f8;
   /*background-color: #f7efaba6;*/
   border: 1px solid #d1bf1ca3;
@@ -134,4 +147,7 @@ a:hover + .show,.show:hover{
 }
 .light-th{
   /*background-color: #cc0000;*/
+}
+#menu-st{
+  min-height: 60px;
 }

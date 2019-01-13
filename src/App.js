@@ -7,6 +7,11 @@ import Pagination from "./components/Pagination";
 import load from './load';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
+import translations from "./i18n/locales"
+import {injectIntl, IntlProvider} from 'react-intl';
+import {changeLanguage} from "./actions/language";
+import {connect} from "react-redux";
+import {changeTheme} from "./actions/theme";
 
 
 const DEFAULT_FORM_SEARCH_MENU_INDEX = 3;
@@ -237,31 +242,87 @@ class App extends React.Component {
         });
     };
 
+    onThemeChange(theme) {
+        var articles = document.querySelectorAll("#articles-list > .article");
+        var links = document.getElementsByTagName("a");
+        var pagLinks = document.querySelectorAll("#pagination > li > a");
+
+        if (theme === "light"){
+            //Light theme
+            document.body.style.setProperty('background-color', '#faebd7');
+            document.body.style.setProperty('color', '#333');
+            for (var i =0; i< articles.length;i++){
+                articles[i].style.backgroundColor = "#f8f8f8";
+                articles[i].style.borderColor = "#d1bf1ca3";
+            }
+            for (var i =0; i< links.length;i++){
+                links[i].style.color="#777";
+            }
+            for (var i =0; i< pagLinks.length;i++){
+                pagLinks[i].style.color="#337ab7";
+            }
+            document.getElementById("menu-st").style.backgroundColor = "#f8f8f8";
+            document.getElementById("menu-st").style.borderColor = "#faebd7";
+            document.getElementById("theme-btn").innerHTML = "Light";
+
+        } else {
+
+            //Dark theme
+            document.body.style.setProperty('background-color', '#222');
+            document.body.style.setProperty('color', 'white');
+            for (var i =0; i< articles.length;i++){
+                articles[i].style.backgroundColor = "#303030";
+                articles[i].style.borderColor = "#303030";
+            }
+            for (var i =0; i< links.length;i++){
+                links[i].style.color="white";
+            }
+            for (var i =0; i< pagLinks.length;i++){
+                pagLinks[i].style.color="#777";
+            }
+            document.getElementById("menu-st").style.backgroundColor = "#375a7f";
+            document.getElementById("menu-st").style.borderColor = "#375a7f";
+            document.getElementById("theme-btn").innerHTML = "Dark";
+        }
+    }
+
     componentDidMount() {
         this.fetchMenu().then(() => this.loadArticles());
+        // this.onThemeChange(theme);
     }
 
 
 
     render() {
         const { filteredArticles, menuItems, currentPage, pagesNum, loading } = this.state;
+        const { language } = this.props.language;
+        const locale = language || "en";
+        const messages = translations[locale];
+        console.log("LANGUAGE", locale);
         return (
-            <div>
-                <div className="menu-style" id="menu-style">
-                    <Menu items={menuItems} onClick={this.onMenuClick}>
-                        <Form
-                            onSubmit={this.onSubmit}
-                            // query={this.state.query}
-                            onQueryChanged={this.onQueryChanged}
-                        />
+            <IntlProvider locale={locale} key={locale} messages={messages}>
+                <div>
+                    <div className="menu-style" id="menu-style">
+                        <Menu items={menuItems} onClick={this.onMenuClick}>
+                            <Form
+                                onSubmit={this.onSubmit}
+                                // query={this.state.query}
+                                onQueryChanged={this.onQueryChanged}
+                            />
 
-                    </Menu>
-                    <Pagination  current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
+                        </Menu>
+                        <Pagination  current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
+                    </div>
+                    {loading && (<div>Loading</div>)}
+                    <ArticlesList articles={filteredArticles} />
                 </div>
-                {loading && (<div>Loading</div>)}
-                <ArticlesList articles={filteredArticles} />
-            </div>
+            </IntlProvider>
         );
     }
 }
-export default App;
+const mapStateToProps = state => ({
+    language: state.language,
+    ...state
+});
+const mapDispatchToProps = dispatch => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(App);

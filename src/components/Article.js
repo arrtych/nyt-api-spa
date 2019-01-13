@@ -28,7 +28,7 @@ class Article extends  React.Component {
         // var contentNew = content;
         // var modifiedContent = contentNew.substring(0,5);
         return (
-            <li className="article ">
+            <li className="article article-st-light">
                 {/*<Col xs={6} md={6}>*/}
 
                     <h4>{title}</h4>

@@ -19,7 +19,7 @@ class MenuItem extends React.Component {
         const { item } = this.props;
         return (
             <li className="menu-item">
-                <a href={buildUrl(item.query)} onClick={this.onClick}>{item.label}</a>
+                <a href={item && buildUrl(item.query)} onClick={this.onClick}>{item && item.label}</a>
             </li>
         )
     }
