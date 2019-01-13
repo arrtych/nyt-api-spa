@@ -3,7 +3,6 @@ export const buildUrl = (query) => {
     const { url, params } = query;
     let newUrl = url;
     const esc = encodeURIComponent;
-    console.log("params", params);
     const newQuery = Object.keys(params)
         .map((key) => {
             const val = params[key];

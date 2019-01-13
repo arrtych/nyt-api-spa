@@ -4,6 +4,9 @@ import persistState from 'redux-localstorage'
 import rootReducer from './reducers/rootReducer';
 
 const loadState = {
+    query: {
+        query: ''
+    },
     theme: {
         theme: 'light'
     },

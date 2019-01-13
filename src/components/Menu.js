@@ -12,6 +12,7 @@ import {
     Navbar,
     NavDropdown,
     NavItem,
+    Glyphicon,
     MenuItem as BMenuItem,
 } from "react-bootstrap";
 import Form from "./Form";
@@ -143,7 +144,7 @@ class Menu extends React.Component {
                             </NavDropdown>
                             <NavItem eventKey={1} href="#"  onClick={this.toggleTheme}>
                                 <span>{this.props.theme === "light" ? formatMessage(messages.themeLight): formatMessage(messages.themeDark)}</span>
-                                <img src={'assets/img/dark-theme.png'} />
+                                <Glyphicon glyph="adjust" />
                             </NavItem>
                         </Nav>
                         <Navbar.Form pullRight>

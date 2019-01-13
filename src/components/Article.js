@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import PropTypes from "prop-types";
 import {Button, Panel, Col} from "react-bootstrap";
 import {injectIntl, defineMessages} from "react-intl";
@@ -19,18 +20,24 @@ class Article extends  React.Component {
         if(!article) article = {};
         const {
             author,
+            source,
             image,
             images,
-            description,
             title,
             url,
             publishedAt,
-            content
         } = article;
 
         var articleDate = publishedAt;
+        let modifiedDate;
+        let content;
         if(articleDate){
-            var modifiedDate = articleDate.substring(0, 10) + " "+ articleDate.substring(11, 19);
+            modifiedDate = moment(articleDate).format("MMMM Do YYYY, h:mm:ss a");
+        }
+        if(article.description){
+            content = article.description;
+        } else if(article.content){
+            content = article.content;
         }
 
         // var contentNew = content;
@@ -38,19 +45,24 @@ class Article extends  React.Component {
         return (
             <Panel className="article">
                 <Panel.Heading>
-                    <div dangerouslySetInnerHTML={{__html: title}}></div>
+                    <h3 dangerouslySetInnerHTML={{__html: title}}></h3>
                 </Panel.Heading>
                 <Panel.Body>
-                    <p><b>Author:</b> <div dangerouslySetInnerHTML={{__html: author}}></div></p>
+                    {author && (<p>
+                        <b>Author:</b> <div dangerouslySetInnerHTML={{__html: author}}></div>
+                    </p>)}
+                    {source && (<p>
+                        <b>Source:</b> <div dangerouslySetInnerHTML={{__html: source}}></div>
+                    </p>)}
                     <p><b>Date:</b> {modifiedDate}</p>
                     <div>
                         {image && <img src={image} />}
                         {images && (<ul>{images.map((image, index) => <li key={`image-${index}`}><img src={image} /></li>)}</ul>)}
-                        <p className="description"><b>Description:</b> <div dangerouslySetInnerHTML={{__html: description}}></div></p>
+                        <p className="description"><b>Description:</b> <div dangerouslySetInnerHTML={{__html: content}}></div></p>
                     </div>
 
                     <Button className="read-more-btn pull-right" bsStyle="warning" bsSize="small">
-                        <a href={url}>{formatMessage(messages.readMore)}</a>
+                        <a href={url} target="_blank" rel="noopener noreferrer">{formatMessage(messages.readMore)}</a>
                     </Button>
                 </Panel.Body>
             </Panel>

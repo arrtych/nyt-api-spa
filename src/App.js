@@ -12,6 +12,7 @@ import {injectIntl, IntlProvider} from 'react-intl';
 import {changeLanguage} from "./actions/language";
 import {connect} from "react-redux";
 import {changeTheme} from "./actions/theme";
+import {query} from "./actions/query";
 
 
 const DEFAULT_FORM_SEARCH_MENU_INDEX = 3;
@@ -27,12 +28,11 @@ class App extends React.Component {
     static propTypes = {
         data: PropTypes.array.isRequired,
         onClick: PropTypes.func.isRequired,
-
+        query: PropTypes.string,
     };
     state = {
         menuItems: undefined,
         title: undefined,
-        query: '',
         articles : undefined,
         filteredArticles: undefined,
         sources : undefined,
@@ -63,6 +63,7 @@ class App extends React.Component {
         if(json.articles) {
             articles = json.articles.map((article) => ({
                 author: article.author,
+                source: article.source.name,
                 image: article.urlToImage,
                 title: article.title,
                 description: article.description,
@@ -174,8 +175,9 @@ class App extends React.Component {
             query = e.target.value;
             this.setState({ query });
         } else {
-            query = this.state.query;
+            query = e;
         }
+        console.log("onQueryChanged", query);
         if(query === "") {
             this.setState((state) => ({
                 filteredArticles: state.articles
@@ -212,13 +214,13 @@ class App extends React.Component {
 
     filterArticles = (article, index, array) => {
         let newArticle = {...article};
-        const { query } = this.state;
+        const { query } = this.props;
         if(!article) return false;
         const keys = ["author","title","description","content"];
         let notFound = true;
         for (const key of keys) {
             newArticle[key] = article[key];
-            if(!article[key]) {
+            if(!article[key] || !query) {
                 continue;
             }
             if(article[key].toLowerCase().indexOf(query.toLowerCase()) !== -1) {
@@ -288,6 +290,9 @@ class App extends React.Component {
         if (this.props.theme !== prevProps.theme) {
             this.setTheme();
         }
+        if (this.props.query !== prevProps.query) {
+            this.onQueryChanged(this.props.query);
+        }
     }
 
     render() {
@@ -306,7 +311,6 @@ class App extends React.Component {
                                 // query={this.state.query}
                                 onQueryChanged={this.onQueryChanged}
                             />
-
                         </Menu>
                         <div className="sub-header">
                             <Pagination current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
@@ -328,6 +332,9 @@ class App extends React.Component {
 const mapStateToProps = state => ({
     language: state.language.language,
     theme: state.theme.theme,
+    query: state.query.query,
 });
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    makeQuery: (value) => dispatch(query(value)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(App);

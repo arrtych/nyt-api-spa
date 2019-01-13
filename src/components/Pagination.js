@@ -1,6 +1,7 @@
 import React from "react";
 import {Pagination as BootstrapPagination} from "react-bootstrap";
 import PropTypes from "prop-types";
+import ReactPaginate from 'react-paginate';
 const { Ellipsis, Item, First, Last, Next, Prev } = BootstrapPagination;
 
 class Pagination extends React.Component {
@@ -40,20 +41,27 @@ class Pagination extends React.Component {
     };
     nextPage = (e) => {
         const { onPageChanged, current, pages } = this.props;
-        if(onPageChanged) {
-            onPageChanged(current + 1 > pages ? pages : current + 1, e);
+        if(current <= pages) {
+            if (onPageChanged) {
+                onPageChanged(current + 1, e);
+            }
         }
     };
+    onPageChanged = (e) => {
+        const { onPageChanged, current, pages } = this.props;
+        onPageChanged(e.selected, e);
+    };
     render() {
-        const { onQueryChanged, query } = this.props;
+        const { onPageChanged, query, pages, current } = this.props;
         return (
-            <BootstrapPagination id="pagination">
-                <First />
-                <Prev />
-                {this.getPrintablePages()}
-                <Next onClick={() => this.nextPage()}/>
-                <Last />
-            </BootstrapPagination>
+            <ReactPaginate forcePage={current} pageCount={pages} activeClassName="active" containerClassName="pagination" pageRangeDisplayed={5} marginPagesDisplayed={5} onPageChange={this.onPageChanged} />
+            // <BootstrapPagination id="pagination">
+            //     <First disabled={firstDisabled} onClick={() => onPageChanged(1)} />
+            //     <Prev disabled={prevDisabled} onClick={this.prevPage} />
+            //     {this.getPrintablePages()}
+            //     <Next disabled={nextDisabled} onClick={this.nextPage} />
+            //     <Last disabled={lastDisabled} onClick={() => onPageChanged(pages)} />
+            // </BootstrapPagination>
         );
     }
 }
