@@ -1,0 +1,1 @@
+workbox.router.registerRoute(/\.png$/, workbox.strategies.networkFirst());
