@@ -14,6 +14,7 @@ import {changeLanguage} from "./actions/language";
 import {connect} from "react-redux";
 import {changeTheme} from "./actions/theme";
 import {query} from "./actions/query";
+import menuJson from "./menu.json";
 
 
 const DEFAULT_FORM_SEARCH_MENU_INDEX = 3;
@@ -31,22 +32,25 @@ class App extends React.Component {
         onClick: PropTypes.func.isRequired,
         query: PropTypes.string,
     };
-    state = {
-        menuItems: undefined,
-        title: undefined,
-        articles : undefined,
-        filteredArticles: undefined,
-        sources : undefined,
-        search: '',
-        lastUrl: '',
-        currentPage: 1,
-        pagesNum: 1,
-        loading: false,
-        perPage: DEFAULT_PER_PAGE,
-        data: null,
-    };
-
-
+    constructor(props) {
+        super(props);
+        const menuItems = menuJson.items;
+        this.filterMenu(menuItems);
+        this.state = {
+            menuItems: menuItems,
+            title: undefined,
+            articles : undefined,
+            filteredArticles: undefined,
+            sources : undefined,
+            search: '',
+            lastUrl: '',
+            currentPage: 1,
+            pagesNum: 1,
+            loading: false,
+            perPage: DEFAULT_PER_PAGE,
+            data: null,
+        };
+    }
     onMenuClick = async (href) => {
         const articles = await this.getData(href);
         this.setState({
@@ -160,15 +164,15 @@ class App extends React.Component {
 
 
 
-    async fetchMenu() {
-        const res = await fetch (`/menu.json`);
-        const menu = await res.json();
-        const { items } = menu;
-        this.filterMenu(items);
-        // this.setState({
-        //     menuItems: items
-        // });
-    }
+    // async fetchMenu() {
+    //     const res = await fetch (`/menu.json`);
+    //     const menu = await res.json();
+    //     const { items } = menu;
+    //     this.filterMenu(items);
+    //     // this.setState({
+    //     //     menuItems: items
+    //     // });
+    // }
 
     onQueryChanged = (e) => {
         const { articles } = this.state;
@@ -283,7 +287,8 @@ class App extends React.Component {
         if(theme) document.body.className = `${this.props.theme}-theme`;
     };
     componentDidMount() {
-        this.fetchMenu().then(() => this.loadArticles());
+        // this.fetchMenu().then(() => this.loadArticles());
+        this.loadArticles();
         // this.onThemeChange(theme);
         this.setTheme();
         this.filterMenu();

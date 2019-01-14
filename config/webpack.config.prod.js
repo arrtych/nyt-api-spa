@@ -476,7 +476,10 @@ module.exports = {
       swDest: 'sw.js',
       // include: [/\.html$/, /\.js$/, /assets\/*/],
       // include: /\.*$/,
+      globDirectory: path.resolve('build'),
+      globPatterns: ['**/*.{html,js,css,png,svg}'],
       exclude: [/\.map$/, /asset-manifest\.json$/],
+      importScripts: '/sw-addon.js',
       importWorkboxFrom: 'cdn',
       // globDirectory: '.',
       // globStrict: true,
@@ -488,7 +491,22 @@ module.exports = {
       //     'build/static/js/**.js'
       // ],
       // globPatterns: ['*.{js,png,html,css}', 'build/static/img/*.{js,png,html,css}'],
-      navigateFallback: publicUrl + '/index.html',
+    navigateFallback: publicUrl + '/index.html',
+      runtimeCaching: [{
+          // To match cross-origin requests, use a RegExp that matches
+          // the start of the origin:
+          urlPattern: new RegExp('^https://newsapi\.org/'),
+          handler: 'staleWhileRevalidate',
+          options: {
+              cacheName: 'news-api-cache',
+              cacheableResponse: {
+                  statuses: [0, 200]
+              },
+              matchOptions: {
+                  ignoreSearch: false,
+              },
+          }
+      }],
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),

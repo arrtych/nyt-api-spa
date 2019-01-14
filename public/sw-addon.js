@@ -1,1 +1,1 @@
-workbox.router.registerRoute(/\.png$/, workbox.strategies.networkFirst());
+workbox.routing.registerRoute(/\.{png,jpg}$/, workbox.strategies.networkFirst());
