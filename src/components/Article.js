@@ -9,6 +9,27 @@ const messages = defineMessages({
         id: 'button.read-more',
         defaultMessage: 'Read more ...'
     },
+    title: {
+        id: 'article.title',
+        defaultMessage: 'Title'
+    },
+    author: {
+        id: 'article.author',
+        defaultMessage: 'Author'
+    },
+    date: {
+        id: 'article.date',
+        defaultMessage: 'Date'
+    },
+    source: {
+        id: 'article.source',
+        defaultMessage: 'Source'
+    },
+    description: {
+        id: 'article.description',
+        defaultMessage: 'Description'
+    },
+
 });
 
 class Article extends  React.Component {
@@ -49,16 +70,16 @@ class Article extends  React.Component {
                 </Panel.Heading>
                 <Panel.Body>
                     {author && (<p>
-                        <b>Author:</b> <div dangerouslySetInnerHTML={{__html: author}}></div>
+                        <b>{formatMessage(messages.author)}</b> <div dangerouslySetInnerHTML={{__html: author}}></div>
                     </p>)}
                     {source && (<p>
-                        <b>Source:</b> <div dangerouslySetInnerHTML={{__html: source}}></div>
+                        <b>{formatMessage(messages.source)}</b> <div dangerouslySetInnerHTML={{__html: source}}></div>
                     </p>)}
-                    <p><b>Date:</b> {modifiedDate}</p>
+                    <p><b>{formatMessage(messages.date)}</b> {modifiedDate}</p>
                     <div>
                         {image && <img src={image} />}
                         {images && (<ul>{images.map((image, index) => <li key={`image-${index}`}><img src={image} /></li>)}</ul>)}
-                        <p className="description"><b>Description:</b> <div dangerouslySetInnerHTML={{__html: content}}></div></p>
+                        <p className="description"><b>{formatMessage(messages.description)}</b> <div dangerouslySetInnerHTML={{__html: content}}></div></p>
                     </div>
 
                     <Button className="read-more-btn pull-right" bsStyle="warning" bsSize="small">

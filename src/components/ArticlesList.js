@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import Article from './Article';
-import {Grid, Row} from "react-bootstrap";
+import {Col, Grid, Row} from "react-bootstrap";
 
 class ArticlesList extends React.Component {
     static propTypes = {
@@ -40,9 +40,9 @@ class ArticlesList extends React.Component {
                 {/*<div className="search-input">*/}
                     {/*<input type="text" value={this.state.search} onChange={this.updateSearch.bind(this)}/>*/}
                 {/*</div>*/}
-                <Row>
-                    {articles && (<div className="articles-list col" id="articles-list" >{articles.map((article, index) =>
-                        <Article key={`article-${index}`}  article={article}/>)}</div>)}
+                <Row className="show-grid">
+                    {articles && (<Col md={12}  className="articles-list col" id="articles-list" >{articles.map((article, index) =>
+                        <Article key={`article-${index}`}  article={article}/>)}</Col>)}
                 </Row>
 
             </Grid>

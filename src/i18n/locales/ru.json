@@ -1,6 +1,14 @@
 {
+  "article.author": "Автор: ",
+  "article.date": "Дата выхода: ",
+  "article.description": "Описание: ",
+  "article.source": "Источник: ",
+  "article.title": "Заголовок",
   "button.read-more": "Подробнее ...",
   "menu.lang": "Язык",
   "menu.theme.dark": "Тёмная тема",
-  "menu.theme.light": "Светлая тема"
+  "menu.theme.light": "Светлая тема",
+  "menu.topics": "Темы",
+  "pagination.next": "Следующий",
+  "pagination.previous": "Предыдущий"
 }

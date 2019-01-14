@@ -4,6 +4,7 @@ import Menu from "./components/Menu";
 import { buildUrl } from "./utils";
 import ArticlesList from "./components/ArticlesList";
 import Pagination from "./components/Pagination";
+import Loader from "./components/Loader";
 import load from './load';
 import PropTypes from "prop-types";
 import {Button, Grid, Row} from "react-bootstrap";
@@ -163,9 +164,10 @@ class App extends React.Component {
         const res = await fetch (`/menu.json`);
         const menu = await res.json();
         const { items } = menu;
-        this.setState({
-            menuItems: items
-        });
+        this.filterMenu(items);
+        // this.setState({
+        //     menuItems: items
+        // });
     }
 
     onQueryChanged = (e) => {
@@ -203,8 +205,8 @@ class App extends React.Component {
 
 
     wordHighlight = (text, searchText) => {
-        var innerHTML = searchText;
-        var index = innerHTML.toLowerCase().indexOf(text);
+        let innerHTML = searchText;
+        const index = innerHTML.toLowerCase().indexOf(text);
         if (index >= 0) {
             innerHTML = innerHTML.substring(0,index) + "<span class='highlight'>" + innerHTML.substring(index,index+text.length) + "</span>" + innerHTML.substring(index + text.length);
             searchText = innerHTML;
@@ -284,7 +286,24 @@ class App extends React.Component {
         this.fetchMenu().then(() => this.loadArticles());
         // this.onThemeChange(theme);
         this.setTheme();
+        this.filterMenu();
     }
+
+    filterMenu = (menuItems = false) => {
+        if(!menuItems) menuItems = this.state.menuItems;
+        this.setState((state, props) => ({
+            ...menuItems && { menuItems: menuItems.map((menuItem) => ({
+                ...menuItem,
+                ...props.language === "ru" && menuItem.label_ru && {
+                    label: menuItem.label_ru,
+                    label_en: menuItem.label,
+                },
+                ...props.language === "en" && {
+                    label: menuItem.label_en || menuItem.label
+                }
+            })) }
+        }));
+    };
 
     componentDidUpdate(prevProps) {
         if (this.props.theme !== prevProps.theme) {
@@ -292,6 +311,9 @@ class App extends React.Component {
         }
         if (this.props.query !== prevProps.query) {
             this.onQueryChanged(this.props.query);
+        }
+        if (this.props.language !== prevProps.language) {
+            this.filterMenu();
         }
     }
 
@@ -314,16 +336,13 @@ class App extends React.Component {
                         </Menu>
                         <div className="sub-header">
                             <Pagination current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
-                            {loading && (<div className="loading">
-                                <div className="lds-ellipsis">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div></div>)}
+                            <Loader loading={loading} />
                         </div>
                     </Grid>
                     <ArticlesList articles={filteredArticles} />
+                    {filteredArticles && filteredArticles.length && (<Grid>
+                        <Pagination current={currentPage} pages={pagesNum} onPageChanged={this.onPageChanged} />
+                    </Grid>)}
                 </div>
             </IntlProvider>
         );

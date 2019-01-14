@@ -1,6 +1,14 @@
 {
+  "article.author": "Author: ",
+  "article.date": "Date: ",
+  "article.description": "Description: ",
+  "article.source": "Source: ",
+  "article.title": "Title: ",
   "button.read-more": "Read more ...",
   "menu.lang": "Lang",
   "menu.theme.dark": "Dark theme",
-  "menu.theme.light": "Light theme"
+  "menu.theme.light": "Light theme",
+  "menu.topics": "Topics",
+  "pagination.next": "Next",
+  "pagination.previous": "Previous"
 }

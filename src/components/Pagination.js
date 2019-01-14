@@ -2,7 +2,19 @@ import React from "react";
 import {Pagination as BootstrapPagination} from "react-bootstrap";
 import PropTypes from "prop-types";
 import ReactPaginate from 'react-paginate';
+import {defineMessages, injectIntl} from "react-intl";
 const { Ellipsis, Item, First, Last, Next, Prev } = BootstrapPagination;
+
+const messages = defineMessages({
+    previousLabel: {
+        id: 'pagination.previous',
+        defaultMessage: 'Previous'
+    },
+    nextLabel: {
+        id: 'pagination.next',
+        defaultMessage: 'Next'
+    },
+});
 
 class Pagination extends React.Component {
     static propTypes = {
@@ -52,9 +64,19 @@ class Pagination extends React.Component {
         onPageChanged(e.selected, e);
     };
     render() {
-        const { onPageChanged, query, pages, current } = this.props;
+        const { intl:{formatMessage}, query, pages, current } = this.props;
         return (
-            <ReactPaginate forcePage={current} pageCount={pages} activeClassName="active" containerClassName="pagination" pageRangeDisplayed={5} marginPagesDisplayed={5} onPageChange={this.onPageChanged} />
+            <ReactPaginate
+                forcePage={current}
+                pageCount={pages}
+                activeClassName="active"
+                containerClassName="pagination"
+                pageRangeDisplayed={5}
+                marginPagesDisplayed={5}
+                nextLabel={formatMessage(messages.nextLabel)}
+                previousLabel={formatMessage(messages.previousLabel)}
+                onPageChange={this.onPageChanged}
+            />
             // <BootstrapPagination id="pagination">
             //     <First disabled={firstDisabled} onClick={() => onPageChanged(1)} />
             //     <Prev disabled={prevDisabled} onClick={this.prevPage} />
@@ -66,4 +88,4 @@ class Pagination extends React.Component {
     }
 }
 
-export default Pagination;
+export default injectIntl(Pagination);

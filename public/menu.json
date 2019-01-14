@@ -2,6 +2,7 @@
   "items": [
     {
       "label": "All articles search",
+      "label_ru": "Все статьи",
       "query": {
         "url": "https://newsapi.org/v2/everything",
         "params": {

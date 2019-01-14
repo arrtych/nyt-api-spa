@@ -5,6 +5,31 @@
     "filepath": "src/components/Article.js"
   },
   {
+    "id": "article.title",
+    "defaultMessage": "Title",
+    "filepath": "src/components/Article.js"
+  },
+  {
+    "id": "article.author",
+    "defaultMessage": "Author",
+    "filepath": "src/components/Article.js"
+  },
+  {
+    "id": "article.date",
+    "defaultMessage": "Date",
+    "filepath": "src/components/Article.js"
+  },
+  {
+    "id": "article.source",
+    "defaultMessage": "Source",
+    "filepath": "src/components/Article.js"
+  },
+  {
+    "id": "article.description",
+    "defaultMessage": "Description",
+    "filepath": "src/components/Article.js"
+  },
+  {
     "id": "menu.lang",
     "defaultMessage": "Lang",
     "filepath": "src/components/Menu.js"
@@ -18,5 +43,20 @@
     "id": "menu.theme.dark",
     "defaultMessage": "Dark theme",
     "filepath": "src/components/Menu.js"
+  },
+  {
+    "id": "menu.topics",
+    "defaultMessage": "Topics",
+    "filepath": "src/components/Menu.js"
+  },
+  {
+    "id": "pagination.previous",
+    "defaultMessage": "Previous",
+    "filepath": "src/components/Pagination.js"
+  },
+  {
+    "id": "pagination.next",
+    "defaultMessage": "Next",
+    "filepath": "src/components/Pagination.js"
   }
 ]

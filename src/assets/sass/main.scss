@@ -1,3 +1,6 @@
+$screen-lg:                  1200px !default;
+$screen-lg-min:              $screen-lg !default;
+
 body, html {
   font-family: 'Open Sans', sans-serif;
 }
@@ -20,10 +23,11 @@ body, html {
 .navbar .container {
   width: 100%!important;
 }
-
 .read-more-btn a {
+  text-decoration: none!important;
+  color: white!important;
   text-decoration: none;
-  color: white;
+  font-size: 16px;
 }
 .description{
   padding: 1em 0 0.5em;
@@ -34,15 +38,33 @@ body, html {
   margin-bottom: 0.3em;
 }
 #menu-st{
-  min-height: 60px;
+  //min-height: 60px;
+  @media (min-width: $screen-lg-min) {
+    .navbar-collapse.collapse {
+      display: flex !important;
+      align-items: center;
+      justify-content: flex-end;
+      .navbar-right {
+        margin: 0 !important;
+        align-items: center;
+        display: flex !important;
+      }
+    }
+  }
 }
 
 .languages {
+  & > a {
+    padding-right: 5px;
+  }
   span {
+    img {
+      margin-top: 1px;
+    }
     span {
       margin-left: 10px;
       position: relative;
-      top: 3px;
+      //top: 3px;
     }
   }
   .dropdown-menu {
@@ -65,12 +87,15 @@ body, html {
   justify-content: space-between;
   align-items: center;
   padding-right: 8px;
+  margin-top: -1em;
 }
 
 .articles-list {
   min-height: 500px;
 }
 .navbar-right {
+  display: flex;
+  align-items: center;
   .glyphicon {
     padding-left: 8px!important;
     position: relative;
